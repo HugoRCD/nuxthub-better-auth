@@ -1,5 +1,7 @@
 ![social-preview](./public/og.png)
 
+> **⚠️** This repo is a fork of https://github.com/atinux/nuxthub-better-auth
+
 # NuxtHub x BetterAuth
 
 A demo of using [BetterAuth](https://better-auth.com) with [NuxtHub](https://hub.nuxt.com) (Cloudflare Pages with D1 & KV).
