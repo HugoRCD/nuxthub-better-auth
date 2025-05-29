@@ -13,6 +13,14 @@ const headerLinks = computed(() => {
       to: '/user',
     },
     {
+      label: 'Teams',
+      to: '/teams',
+    },
+    {
+      label: 'Notes',
+      to: '/notes',
+    },
+    {
       label: 'Secret',
       to: '/secret',
     },

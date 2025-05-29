@@ -6,7 +6,7 @@ import type {
   ClientOptions,
 } from 'better-auth/client'
 import type { RouteLocationRaw } from 'vue-router'
-import { adminClient } from 'better-auth/client/plugins'
+import { adminClient, organizationClient } from 'better-auth/client/plugins'
 
 interface RuntimeAuthConfig {
   redirectUserTo: RouteLocationRaw | string
@@ -22,7 +22,7 @@ export function useAuth() {
     fetchOptions: {
       headers,
     },
-    plugins: [adminClient()]
+    plugins: [adminClient(), organizationClient()]
   })
 
   const options = defu(useRuntimeConfig().public.auth as Partial<RuntimeAuthConfig>, {
