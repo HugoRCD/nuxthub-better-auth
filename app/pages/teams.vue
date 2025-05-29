@@ -10,7 +10,7 @@ const state = reactive<Partial<CreateTeamSchema>>({
 })
 
 const {
-  organization,
+  isLoading,
   organizations,
   selectTeam,
   createTeam,
@@ -20,16 +20,7 @@ const {
 
 <template>
   <div>
-    <div class="flex items-center gap-1">
-      <span class="font-bold"> Selected Team: </span>
-      <span>
-        {{ organization?.name }}
-      </span>
-      /
-      <span>
-        {{ organization?.slug }}
-      </span>
-    </div>
+    <CurrentTeam />
     <UCard>
       <UForm :schema="createTeamSchema" :state class="flex flex-col gap-2" @submit="createTeam">
         <UFormField label="Name" name="name" required>
@@ -44,7 +35,7 @@ const {
         <UButton type="submit" label="Create Team" block class="mt-4" />
       </UForm>
     </UCard>
-    <div class="flex flex-col gap-2 mt-4">
+    <div v-if="!isLoading" class="flex flex-col gap-2 mt-4">
       <UCard v-for="team in organizations" :key="team.id">
         <div class="flex items-center gap-1">
           <div class="flex flex-col gap-1 flex-1">
@@ -60,6 +51,11 @@ const {
             <UButton color="error" icon="i-lucide-trash" class="ml-auto" @click="deleteTeam(team.id)" />
           </div>
         </div>
+      </UCard>
+    </div>
+    <div v-else class="flex flex-col gap-2 mt-4">
+      <UCard v-for="i in 3" :key="i">
+        <USkeleton class="w-full h-10" />
       </UCard>
     </div>
   </div>

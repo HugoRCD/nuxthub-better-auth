@@ -9,6 +9,7 @@ export function serverAuth() {
     _auth = betterAuth({
       database: {
         dialect: new D1Dialect({
+          // @ts-expect-error - D1Dialect is not typed correctly
           database: hubDatabase(),
         }),
         type: 'sqlite',

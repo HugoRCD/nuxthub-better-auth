@@ -2,7 +2,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import type { Organization, Member } from 'better-auth/plugins'
 import type { CreateTeamSchema, FullOrganization } from '~~/shared/types'
 
-const useCurrentOrganization = () => {
+export const useCurrentOrganization = () => {
   return useState<Organization | null>('organization', () => null)
 }
 
@@ -34,7 +34,7 @@ export function useOrgs() {
     return data
   }
 
-  const { data: organizations, refresh } = useAsyncData('organizations', async () => {
+  const { data: organizations, refresh, status } = useAsyncData('organizations', async () => {
     const { data, error } = await client.organization.list()
     if (!data || error) {
       toast.add({
@@ -46,6 +46,8 @@ export function useOrgs() {
         data!.map((org) => getFullOrganization(org.id))
     ) as FullOrganization[]
   })
+
+  const isLoading = computed(() => status.value === 'pending')
 
   const { refresh: refreshSelectedTeam } = useAsyncData('selectedTeam', async () => {
     organization.value = await getFullOrganization()
@@ -126,6 +128,7 @@ export function useOrgs() {
     selectTeam,
     createTeam,
     deleteTeam,
-    organizations
+    organizations,
+    isLoading
   }
 }
