@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { CreateTeamSchema } from '~~/shared/types'
-import { createTeamSchema } from '~~/shared/types'
+import type { CreateTeamSchema } from '~~/shared/types/organizations'
+import { createTeamSchema } from '~~/shared/types/organizations'
 
 const state = reactive<Partial<CreateTeamSchema>>({
   name: undefined,
@@ -20,7 +20,6 @@ const {
 
 <template>
   <div>
-    <CurrentTeam />
     <UCard>
       <UForm :schema="createTeamSchema" :state class="flex flex-col gap-2" @submit="createTeam">
         <UFormField label="Name" name="name" required>
@@ -43,7 +42,7 @@ const {
               {{ team.name }}
             </h2>
             <UAvatarGroup>
-              <UAvatar v-for="member in team.members" :key="member.id" :src="member.user.image" />
+              <UAvatar v-for="member in team.members" :key="member.id" :src="member.user.image" :alt="member.user.name" />
             </UAvatarGroup>
           </div>
           <div class="flex items-center gap-1">

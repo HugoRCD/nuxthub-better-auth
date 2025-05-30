@@ -7,6 +7,7 @@ definePageMeta({
     only: 'guest',
     redirectUserTo: '/user',
   },
+  layout: 'auth'
 })
 
 const auth = useAuth()

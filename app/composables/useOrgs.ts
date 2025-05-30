@@ -1,6 +1,5 @@
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { Organization, Member } from 'better-auth/plugins'
-import type { CreateTeamSchema, FullOrganization } from '~~/shared/types'
 
 export const useCurrentOrganization = () => {
   return useState<Organization | null>('organization', () => null)

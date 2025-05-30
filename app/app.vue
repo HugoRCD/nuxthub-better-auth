@@ -5,6 +5,8 @@ useSeoMeta({
   ogImage: '/og.png',
   twitterImage: '/og.png',
 })
+
+useOrgs()
 </script>
 
 <template>
