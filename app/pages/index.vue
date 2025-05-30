@@ -128,7 +128,7 @@ async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 p-4">
+  <div class="flex-1 flex flex-col items-center justify-center gap-4 p-4">
     <UPageCard class="relative w-full max-w-md bg-muted/20">
       <span class="cross absolute -bottom-px -left-px size-px" />
       <span class="cross absolute -bottom-px -right-px size-px" />

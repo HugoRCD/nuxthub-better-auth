@@ -21,6 +21,12 @@ const items = computed<DropdownMenuItem[][]>(() => ([
     }
   ], [
     {
+      label: 'Manage my account',
+      icon: 'i-lucide-user',
+      to: '/user'
+    }
+  ], [
+    {
       label: 'Appearance',
       icon: 'i-lucide-sun-moon',
       children: [

@@ -28,6 +28,7 @@ declare module 'vue-router' {
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  const toast = useToast()
   // If auth is disabled, skip middleware
   if (to.meta?.auth === false) {
     return
@@ -58,6 +59,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (only === 'admin' && user.value?.role !== 'admin') {
+    toast.add({
+      title: 'You are not authorized to access this page',
+      color: 'error'
+    })
     return navigateTo('/')
   }
 })

@@ -1,83 +1,11 @@
-<!-- <script setup lang="ts">
-</script>
-
-<template>
-  <div>
-    <ImpersonationBanner />
-    <Header />
-    <CurrentTeam />
-    <UContainer class="mt-8">
-      <slot />
-    </UContainer>
-    <Footer />
-  </div>
-</template>
-
- -->
-
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-
-const { signOut, loggedIn, user } = useAuth()
-
-/* const headerLinks = computed(() => {
-  const isAdmin = user.value?.role === 'admin'
-  return [
-    {
-      label: 'Home',
-      to: '/',
-    },
-    {
-      label: 'User',
-      to: '/user',
-    },
-    {
-      label: 'Teams',
-      to: '/teams',
-    },
-    {
-      label: 'Notes',
-      to: '/notes',
-    },
-    {
-      label: 'Secret',
-      to: '/secret',
-    },
-    {
-      label: 'About',
-      to: '/about',
-    },
-    ...(isAdmin ? [
-      {
-        label: 'Admin',
-        to: '/admin',
-      }
-    ] : []),
-  ]
-}) */
-
-const route = useRoute()
-const toast = useToast()
 
 const open = ref(false)
 
 const links = [
   [
     {
-      label: 'User',
-      icon: 'i-lucide-user',
-      to: '/user',
-      onSelect: () => {
-        open.value = false
-      }
-    }, {
-      label: 'Teams',
-      icon: 'i-lucide-users',
-      to: '/teams',
-      onSelect: () => {
-        open.value = false
-      }
-    }, {
       label: 'Notes',
       icon: 'i-lucide-notebook-pen',
       to: '/notes',

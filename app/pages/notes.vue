@@ -2,6 +2,8 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
+// TODO: implement logic between notes and organizations
+
 const { data: notes, refresh } = await useFetch('/api/notes')
 const { user } = useAuth()
 const toast = useToast()

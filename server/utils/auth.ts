@@ -37,6 +37,23 @@ export function serverAuth() {
         },
       },
       plugins: [anonymous(), admin(), organization()],
+      databaseHooks: {
+        session: {
+          create: {
+            before: async (session) => {
+              console.log('session', session)
+              // TODO: implement
+              /* const organization = await getActiveOrganization(session.userId)
+              return {
+                data: {
+                  ...session,
+                  activeOrganizationId: organization.id
+                }
+              } */
+            }
+          }
+        }
+      }
     })
   }
   return _auth

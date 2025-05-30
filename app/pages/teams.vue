@@ -1,39 +1,14 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui'
-import type { CreateTeamSchema } from '~~/shared/types/organizations'
-import { createTeamSchema } from '~~/shared/types/organizations'
-
-const state = reactive<Partial<CreateTeamSchema>>({
-  name: undefined,
-  slug: undefined,
-  logo: undefined
-})
-
 const {
   isLoading,
   organizations,
   selectTeam,
-  createTeam,
   deleteTeam
 } = useOrgs()
 </script>
 
 <template>
   <div>
-    <UCard>
-      <UForm :schema="createTeamSchema" :state class="flex flex-col gap-2" @submit="createTeam">
-        <UFormField label="Name" name="name" required>
-          <UInput v-model="state.name" />
-        </UFormField>
-        <UFormField label="Slug" name="slug" required>
-          <UInput v-model="state.slug" />
-        </UFormField>
-        <UFormField label="Logo" name="logo">
-          <UInput v-model="state.logo" />
-        </UFormField>
-        <UButton type="submit" label="Create Team" block class="mt-4" />
-      </UForm>
-    </UCard>
     <div v-if="!isLoading" class="flex flex-col gap-2 mt-4">
       <UCard v-for="team in organizations" :key="team.id">
         <div class="flex items-center gap-1">

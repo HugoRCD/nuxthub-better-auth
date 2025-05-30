@@ -12,10 +12,8 @@ useOrgs()
 <template>
   <UApp :toaster="{ expand: false }">
     <NuxtLoadingIndicator />
-    <UMain>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </UMain>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </UApp>
 </template>
