@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+useOrgs()
+
 const open = ref(false)
 
 const links = [

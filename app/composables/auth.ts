@@ -26,7 +26,7 @@ export function useAuth() {
   })
 
   const options = defu(useRuntimeConfig().public.auth as Partial<RuntimeAuthConfig>, {
-    redirectUserTo: '/user',
+    redirectUserTo: '/',
     redirectGuestTo: '/',
   })
   const session = useState<InferSessionFromClient<ClientOptions> | null>('auth:session', () => null)

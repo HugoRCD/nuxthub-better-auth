@@ -2,7 +2,7 @@
 const footerLinks = [
   {
     label: 'Source code',
-    to: 'https://github.com/atinux/nuxthub-better-auth',
+    to: 'https://github.com/HugoRCD/nuxthub-better-auth',
     target: '_blank',
   },
   {
@@ -39,7 +39,7 @@ const footerLinks = [
         icon="i-simple-icons-x"
         color="neutral"
         variant="ghost"
-        to="https://x.com/nuxt_js"
+        to="https://x.com/hugorcd__"
         target="_blank"
         aria-label="X"
       />
@@ -47,7 +47,7 @@ const footerLinks = [
         icon="i-simple-icons-github"
         color="neutral"
         variant="ghost"
-        to="https://github.com/nuxt/nuxt"
+        to="https://github.com/HugoRCD/nuxthub-better-auth"
         target="_blank"
         aria-label="GitHub"
       />
