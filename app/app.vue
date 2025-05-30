@@ -5,15 +5,15 @@ useSeoMeta({
   ogImage: '/og.png',
   twitterImage: '/og.png',
 })
+
+useOrgs()
 </script>
 
 <template>
-  <UApp>
+  <UApp :toaster="{ expand: false }">
     <NuxtLoadingIndicator />
-    <UMain>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </UMain>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </UApp>
 </template>

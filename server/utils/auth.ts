@@ -1,13 +1,15 @@
 import { betterAuth } from 'better-auth'
 import { D1Dialect } from '@atinux/kysely-d1'
-import { anonymous, admin } from 'better-auth/plugins'
+import { anonymous, admin, organization } from 'better-auth/plugins'
 
 let _auth: ReturnType<typeof betterAuth>
+
 export function serverAuth() {
   if (!_auth) {
     _auth = betterAuth({
       database: {
         dialect: new D1Dialect({
+          // @ts-expect-error - D1Dialect is not typed correctly
           database: hubDatabase(),
         }),
         type: 'sqlite',
@@ -34,7 +36,24 @@ export function serverAuth() {
           enabled: true,
         },
       },
-      plugins: [anonymous(), admin()],
+      plugins: [anonymous(), admin(), organization()],
+      databaseHooks: {
+        session: {
+          create: {
+            before: async (session) => {
+              console.log('session', session)
+              // TODO: implement
+              /* const organization = await getActiveOrganization(session.userId)
+              return {
+                data: {
+                  ...session,
+                  activeOrganizationId: organization.id
+                }
+              } */
+            }
+          }
+        }
+      }
     })
   }
   return _auth
