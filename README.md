@@ -10,6 +10,17 @@ https://better-auth.hrcd.fr
 
 [![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://admin.hub.nuxt.com/new?repo=hugorcd/nuxthub-better-auth)
 
+# TODO
+
+- [ ] OAuth not working (redirects to login page)
+- [ ] Automatic migration
+- [ ] Connect notes with organizations
+- [ ] Default team on login
+- [ ] Bug on inpersonate
+- [ ] Account change bug → Remain on other account's team
+- [ ] Fix typescript user.role
+- [ ] Refresh bug in prod (disconnects user briefly)
+
 ## Features
 
 - Server-Side rendering on Cloudflare Workers
