@@ -1,4 +1,5 @@
 import { pgTable, text, timestamp, boolean, bigint } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm'
 
 import { user, organization } from './auth'
 
@@ -14,3 +15,10 @@ export const notes = pgTable('notes', {
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
 })
+
+export const notesRelations = relations(notes, ({ one }) => ({
+  user: one(user, {
+    fields: [notes.userId],
+    references: [user.id]
+  })
+}))
