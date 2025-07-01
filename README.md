@@ -17,9 +17,9 @@ https://better-auth.hrcd.fr
 - [x] Connect notes with organizations
 - [x] Default team on login
 - [ ] Bug on inpersonate
-- [ ] Account change bug → Remain on other account's team
+- [x] Account change bug → Remain on other account's team
 - [ ] Fix typescript user.role
-- [ ] Refresh bug in prod (disconnects user briefly)
+- [x] Refresh bug in prod (disconnects user briefly)
 - [x] Delete account
 - [ ] Delete user default team when deleting account
 - [x] Onboarding

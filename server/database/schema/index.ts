@@ -1,7 +1,7 @@
 import { pgTable, text, timestamp, boolean, bigint } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 
-import { user, organization } from './auth'
+import { user, organization, member } from './auth'
 
 export * from './auth'
 
@@ -20,5 +20,12 @@ export const notesRelations = relations(notes, ({ one }) => ({
   user: one(user, {
     fields: [notes.userId],
     references: [user.id]
+  })
+}))
+
+export const memberRelations = relations(member, ({ one }) => ({
+  organization: one(organization, {
+    fields: [member.organizationId],
+    references: [organization.id]
   })
 }))

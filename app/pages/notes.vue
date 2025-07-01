@@ -2,8 +2,6 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
-const organization = useCurrentOrganization()
-
 type NoteWithUser = {
   id: number
   title: string
@@ -20,7 +18,6 @@ type NoteWithUser = {
 }
 
 const { data: notes, refresh } = await useFetch<NoteWithUser[]>('/api/notes')
-const { user } = useAuth()
 const toast = useToast()
 
 const schema = z.object({
@@ -51,9 +48,8 @@ async function createNote(event: FormSubmitEvent<Schema>) {
   await $fetch('/api/notes', {
     method: 'POST',
     body: {
-      ...event.data,
-      userId: user.value?.id,
-      organizationId: organization.value?.id
+      title: event.data.title,
+      content: event.data.content
     }
   })
   toast.add({
