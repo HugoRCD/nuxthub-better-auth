@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth'
 import { anonymous, admin, organization } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { sql, eq, and, ne } from 'drizzle-orm'
 import * as schema from '../database/schema'
 import { useDrizzle } from './drizzle'
 
@@ -18,11 +19,9 @@ export function serverAuth() {
       ),
       secondaryStorage: {
         get: async (key) => {
-          console.log('get', key)
           return await useStorage('cache').getItemRaw(`_auth:${key}`)
         },
         set: async (key, value, ttl) => {
-          console.log('set', key, value, ttl)
           return await useStorage('cache').setItem(`_auth:${key}`, value, { ttl })
         },
         delete: async (key) => {
@@ -42,6 +41,11 @@ export function serverAuth() {
       account: {
         accountLinking: {
           enabled: true,
+        },
+      },
+      user: {
+        deleteUser: {
+          enabled: true
         },
       },
       plugins: [anonymous(), admin(), organization()],

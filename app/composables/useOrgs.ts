@@ -36,37 +36,52 @@ export function useOrgs() {
 
   const { data: organizations, refresh, status } = useAsyncData('organizations', async () => {
     const { data, error } = await client.organization.list()
-    if (!data || error) {
+
+    if (error) {
+      console.log('error', error)
       toast.add({
         title: 'Failed to fetch organizations',
         color: 'error'
       })
     }
-    return await Promise.all(
+    const fullOrgs = await Promise.all(
         data!.map((org) => getFullOrganization(org.id))
     ) as FullOrganization[]
+    
+    if (!activeOrganizationId.value && fullOrgs.length > 0) {
+      const [firstOrg] = fullOrgs
+      if (firstOrg) {
+        activeOrganizationId.value = firstOrg.id
+        console.log(`Auto-selecting first organization: ${firstOrg.name}`)
+      }
+    }
+    
+    return fullOrgs
   })
 
   const isLoading = computed(() => status.value === 'pending')
+  const hasOrganizations = computed(() => organizations.value && organizations.value.length > 0)
 
   const { refresh: refreshSelectedTeam } = useAsyncData('selectedTeam', async () => {
     organization.value = await getFullOrganization()
     return organization.value
   })
 
-  async function selectTeam(id: string) {
+  async function selectTeam(id: string, options: { showToast?: boolean } = {}) {
+    const { showToast = true } = options
     const { data, error } = await client.organization.setActive({
       organizationId: id
     })
     console.log('selectedTeam', data, error)
     activeOrganizationId.value = id
     refreshSelectedTeam()
-    toast.add({
-      title: 'Team selected',
-      color: 'success'
-    })
+    if (showToast) {
+      toast.add({
+        title: 'Team selected',
+        color: 'success'
+      })
+    }
   }
-
 
   async function checkSlug(slug: string) {
     const { error } = await client.organization.checkSlug({
@@ -82,7 +97,8 @@ export function useOrgs() {
     return true
   }
 
-  async function createTeam(event: FormSubmitEvent<CreateTeamSchema>) {
+  async function createTeam(event: FormSubmitEvent<CreateTeamSchema>, options: { showToast?: boolean } = {}) {
+    const { showToast = true } = options
     const isSlugAvailable = await checkSlug(event.data.slug)
     if (!isSlugAvailable) return
     const { data, error } = await client.organization.create({
@@ -96,30 +112,40 @@ export function useOrgs() {
         title: 'Failed to create team',
         color: 'error'
       })
-      return
+      return false
     }
-    toast.add({
-      title: 'Team created',
-      color: 'success'
-    })
-    refresh()
+    
+    await refresh()
+    if (data) {
+      await selectTeam(data.id, { showToast: false })
+    }
+    
+    if (showToast) {
+      toast.add({
+        title: 'Team created',
+        color: 'success'
+      })
+    }
+    return true
   }
 
-  async function deleteTeam(id: string) {
+  async function deleteTeam(id: string, options: { showToast?: boolean } = {}) {
+    const { showToast = true } = options
     const { data, error } = await client.organization.delete({
       organizationId: id
     })
-    console.log('deletedTeam', data, error)
     if (error) {
       toast.add({
         title: 'Failed to delete team',
         color: 'error'
       })
     }
-    toast.add({
-      title: 'Team deleted',
-      color: 'success'
-    })
+    if (showToast) {
+      toast.add({
+        title: 'Team deleted',
+        color: 'success'
+      })
+    }
     refresh()
   }
 
@@ -130,6 +156,7 @@ export function useOrgs() {
     createTeam,
     deleteTeam,
     organizations,
-    isLoading
+    isLoading,
+    hasOrganizations
   }
 }

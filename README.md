@@ -12,14 +12,17 @@ https://better-auth.hrcd.fr
 
 # TODO
 
-- [ ] OAuth not working (redirects to login page)
+- [x] OAuth not working (redirects to login page)
 - [ ] Automatic migration
-- [ ] Connect notes with organizations
-- [ ] Default team on login
+- [x] Connect notes with organizations
+- [x] Default team on login
 - [ ] Bug on inpersonate
 - [ ] Account change bug → Remain on other account's team
 - [ ] Fix typescript user.role
 - [ ] Refresh bug in prod (disconnects user briefly)
+- [x] Delete account
+- [ ] Delete user default team when deleting account
+- [x] Onboarding
 
 ## Features
 

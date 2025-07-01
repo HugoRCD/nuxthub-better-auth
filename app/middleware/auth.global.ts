@@ -1,4 +1,5 @@
 import { defu } from 'defu'
+import { until } from '@vueuse/core'
 
 type MiddlewareOptions = false | {
   /**
@@ -58,11 +59,22 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo(redirectGuestTo)
   }
 
-  if (only === 'admin' && user.value?.role !== 'admin') {
+  if (only === 'admin' && (user.value as any)?.role !== 'admin') {
     toast.add({
       title: 'You are not authorized to access this page',
       color: 'error'
     })
     return navigateTo('/')
+  }
+
+  if (loggedIn.value && to.path !== '/onboarding') {
+    const { organizations, isLoading } = useOrgs()
+    
+    await until(isLoading).toBe(false)
+    
+    if (!organizations.value || organizations.value.length === 0) {
+      console.log('User needs onboarding, redirecting...')
+      return navigateTo('/onboarding')
+    }
   }
 })
