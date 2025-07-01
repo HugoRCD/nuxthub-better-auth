@@ -10,6 +10,7 @@ DATABASE_URL="postgresql://username:password@host:port/database_name?sslmode=req
 
 # Better Auth Configuration
 BETTER_AUTH_SECRET="your-secret-key-here"
+BETTER_AUTH_URL="http://localhost:3000" # Change to your production URL when deploying
 
 # GitHub OAuth (optional - for social login)
 GITHUB_CLIENT_ID="your-github-client-id"
@@ -69,6 +70,7 @@ You can use any PostgreSQL provider like Railway, Supabase, or your own PostgreS
 2. Add the following variables:
    - `DATABASE_URL`: Your PostgreSQL connection string
    - `BETTER_AUTH_SECRET`: Generate a random string (use `openssl rand -base64 32`)
+   - `BETTER_AUTH_URL`: Your Vercel deployment URL (e.g., `https://your-app.vercel.app`)
    - `GITHUB_CLIENT_ID` & `GITHUB_CLIENT_SECRET`: (optional) Your GitHub OAuth credentials
    - `NUXT_UI_PRO_LICENSE`: (optional) Your Nuxt UI Pro license
 
@@ -85,6 +87,7 @@ After deployment, visit `https://your-app.vercel.app/api/migrate` to run the dat
 
 ### Authentication Issues
 - Verify `BETTER_AUTH_SECRET` is set and consistent
+- Check `BETTER_AUTH_URL` matches your deployment URL
 - Ensure GitHub OAuth credentials are correct (if using)
 
 ### Database Connection Issues
