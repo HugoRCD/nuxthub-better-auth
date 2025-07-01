@@ -39,5 +39,5 @@
     "vue-tsc": "^2.2.10",
     "wrangler": "^4.22.0"
   },
-  "packageManager": "pnpm@9.15.9"
+  "packageManager": "pnpm@10.12.4"
 }
