@@ -36,7 +36,7 @@
     "drizzle-kit": "^0.31.1",
     "eslint": "^9.14.0",
     "typescript": "^5.6.3",
-    "vue-tsc": "^2.1.10",
+    "vue-tsc": "^3.0.0",
     "wrangler": "^4.15.2"
   },
   "packageManager": "pnpm@9.12.3"
