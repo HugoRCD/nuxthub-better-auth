@@ -1,13 +1,8 @@
 <script setup lang="ts">
-const footerLinks = [
+const links = [
   {
-    label: 'Source code',
+    label: 'Source Code',
     to: 'https://github.com/HugoRCD/nuxthub-better-auth',
-    target: '_blank',
-  },
-  {
-    label: 'NuxtHub',
-    to: 'https://hub.nuxt.com',
     target: '_blank',
   },
   {
@@ -16,10 +11,15 @@ const footerLinks = [
     target: '_blank',
   },
   {
-    label: 'Nuxt UI Pro',
-    to: 'https://ui.nuxt.com/pro',
+    label: 'Nuxt',
+    to: 'https://nuxt.com',
     target: '_blank',
   },
+  {
+    label: 'Vercel',
+    to: 'https://vercel.com',
+    target: '_blank',
+  }
 ]
 </script>
 
@@ -32,7 +32,7 @@ const footerLinks = [
       </p>
     </template>
     
-    <UNavigationMenu :items="footerLinks" />
+    <UNavigationMenu :items="links" />
 
     <template #right>
       <UButton

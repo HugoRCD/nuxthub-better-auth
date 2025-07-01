@@ -1,25 +1,33 @@
 import { betterAuth } from 'better-auth'
-import { D1Dialect } from '@atinux/kysely-d1'
 import { anonymous, admin, organization } from 'better-auth/plugins'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import * as schema from '../database/schema'
+import { useDrizzle } from './drizzle'
 
 let _auth: ReturnType<typeof betterAuth>
 
 export function serverAuth() {
   if (!_auth) {
     _auth = betterAuth({
-      database: {
-        dialect: new D1Dialect({
-          // @ts-expect-error - D1Dialect is not typed correctly
-          database: hubDatabase(),
-        }),
-        type: 'sqlite',
-      },
+      database: drizzleAdapter(
+        useDrizzle(),
+        {
+          provider: 'pg',
+          schema
+        }
+      ),
       secondaryStorage: {
-        get: key => hubKV().getItemRaw(`_auth:${key}`),
-        set: (key, value, ttl) => {
-          return hubKV().set(`_auth:${key}`, value, { ttl })
+        get: async (key) => {
+          console.log('get', key)
+          return await useStorage('cache').getItemRaw(`_auth:${key}`)
         },
-        delete: key => hubKV().del(`_auth:${key}`),
+        set: async (key, value, ttl) => {
+          console.log('set', key, value, ttl)
+          return await useStorage('cache').setItem(`_auth:${key}`, value, { ttl })
+        },
+        delete: async (key) => {
+          await useStorage('cache').removeItem(`_auth:${key}`)
+        }
       },
       baseURL: getBaseURL(),
       emailAndPassword: {
@@ -40,20 +48,20 @@ export function serverAuth() {
       databaseHooks: {
         session: {
           create: {
-            before: async (session) => {
-              console.log('session', session)
-              // TODO: implement
-              /* const organization = await getActiveOrganization(session.userId)
-              return {
+            before: (session) => {
+              const event = useEvent()
+              const activeOrganizationId = getCookie(event, 'activeOrganizationId')
+
+              return Promise.resolve({
                 data: {
                   ...session,
-                  activeOrganizationId: organization.id
+                  activeOrganizationId
                 }
-              } */
+              })
             }
-          }
-        }
-      }
+          },
+        },
+      },
     })
   }
   return _auth
@@ -68,3 +76,7 @@ function getBaseURL() {
   }
   return baseURL
 }
+
+_auth = serverAuth()
+
+export const auth = _auth!

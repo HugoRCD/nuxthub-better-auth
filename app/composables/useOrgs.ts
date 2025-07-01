@@ -8,6 +8,7 @@ export const useCurrentOrganization = () => {
 export function useOrgs() {
   const { client } = useAuth()
   const organization = useCurrentOrganization()
+  const activeOrganizationId = useCookie('activeOrganizationId')
   const toast = useToast()
 
   async function getFullOrganization(orgId?: string) {
@@ -58,6 +59,7 @@ export function useOrgs() {
       organizationId: id
     })
     console.log('selectedTeam', data, error)
+    activeOrganizationId.value = id
     refreshSelectedTeam()
     toast.add({
       title: 'Team selected',

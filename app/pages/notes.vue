@@ -2,7 +2,7 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
-// TODO: implement logic between notes and organizations
+const organization = useCurrentOrganization()
 
 const { data: notes, refresh } = await useFetch('/api/notes')
 const { user } = useAuth()
@@ -36,8 +36,9 @@ async function createNote(event: FormSubmitEvent<Schema>) {
   await $fetch('/api/notes', {
     method: 'POST',
     body: {
-      ...state,
-      userId: user.value?.id
+      ...event.data,
+      userId: user.value?.id,
+      organizationId: organization.value?.id
     }
   })
   toast.add({
