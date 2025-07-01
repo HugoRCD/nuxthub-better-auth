@@ -17,27 +17,27 @@
   },
   "dependencies": {
     "@atinux/kysely-d1": "^0.3.1",
-    "@iconify-json/heroicons": "^1.2.1",
-    "@iconify-json/lucide": "^1.2.43",
-    "@iconify-json/simple-icons": "^1.2.11",
-    "@nuxt/ui-pro": "^3.1.2",
-    "@nuxthub/core": "^0.8.27",
+    "@iconify-json/heroicons": "^1.2.2",
+    "@iconify-json/lucide": "^1.2.54",
+    "@iconify-json/simple-icons": "^1.2.41",
+    "@nuxt/ui-pro": "^3.2.0",
+    "@nuxthub/core": "^0.9.0",
     "@shelve/cli": "^4.1.6",
-    "@vueuse/core": "^11.2.0",
-    "better-auth": "^1.2.8",
-    "drizzle-orm": "^0.44.0",
-    "nuxt": "^3.17.3",
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5",
-    "zod": "^3.24.4"
+    "@vueuse/core": "^11.3.0",
+    "better-auth": "^1.2.12",
+    "drizzle-orm": "^0.44.2",
+    "nuxt": "^3.17.6",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@hrcd/eslint-config": "^3.0.3",
-    "drizzle-kit": "^0.31.1",
-    "eslint": "^9.14.0",
-    "typescript": "^5.6.3",
-    "vue-tsc": "^2.1.10",
-    "wrangler": "^4.15.2"
+    "drizzle-kit": "^0.31.4",
+    "eslint": "^9.30.0",
+    "typescript": "^5.8.3",
+    "vue-tsc": "^2.2.10",
+    "wrangler": "^4.22.0"
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@9.15.9"
 }
