@@ -3,8 +3,15 @@ const {
   isLoading,
   organizations,
   selectTeam,
-  deleteTeam
+  deleteTeam,
+  fetchOrganizations
 } = useOrgs()
+
+onMounted(async () => {
+  if (organizations.value.length === 0) {
+    await fetchOrganizations()
+  }
+})
 </script>
 
 <template>

@@ -10,8 +10,19 @@ const {
   isLoading,
   organization,
   organizations,
-  selectTeam
+  selectTeam,
+  fetchOrganizations,
+  fetchCurrentOrganization
 } = useOrgs()
+
+onMounted(async () => {
+  if (organizations.value.length === 0) {
+    await fetchOrganizations()
+  }
+  if (!organization.value) {
+    await fetchCurrentOrganization()
+  }
+})
 
 const overlay = useOverlay()
 

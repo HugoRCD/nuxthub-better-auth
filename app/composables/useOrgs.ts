@@ -11,6 +11,10 @@ export function useOrgs() {
   const activeOrganizationId = useCookie('activeOrganizationId')
   const toast = useToast()
 
+  const organizations = useState<FullOrganization[]>('organizations', () => [])
+  const isLoading = useState('orgs-loading', () => false)
+  const hasOrganizations = computed(() => organizations.value && organizations.value.length > 0)
+
   async function getFullOrganization(orgId?: string) {
     if (!orgId) {
       const { data, error } = await client.organization.getFullOrganization()
@@ -34,38 +38,47 @@ export function useOrgs() {
     return data
   }
 
-  const { data: organizations, refresh, status } = useAsyncData('organizations', async () => {
-    const { data, error } = await client.organization.list()
-
-    if (error) {
-      console.log('error', error)
-      toast.add({
-        title: 'Failed to fetch organizations',
-        color: 'error'
-      })
-    }
-    const fullOrgs = await Promise.all(
-        data!.map((org) => getFullOrganization(org.id))
-    ) as FullOrganization[]
+  async function fetchOrganizations() {
+    if (isLoading.value) return organizations.value
     
-    if (!activeOrganizationId.value && fullOrgs.length > 0) {
-      const [firstOrg] = fullOrgs
-      if (firstOrg) {
-        activeOrganizationId.value = firstOrg.id
-        console.log(`Auto-selecting first organization: ${firstOrg.name}`)
+    isLoading.value = true
+    try {
+      const { data, error } = await client.organization.list()
+
+      if (error) {
+        console.log('error', error)
+        toast.add({
+          title: 'Failed to fetch organizations',
+          color: 'error'
+        })
+        return organizations.value
       }
+      
+      const fullOrgs = await Promise.all(
+          data!.map((org) => getFullOrganization(org.id))
+      ) as FullOrganization[]
+      
+      organizations.value = fullOrgs
+      
+      if (!activeOrganizationId.value && fullOrgs.length > 0) {
+        const [firstOrg] = fullOrgs
+        if (firstOrg) {
+          activeOrganizationId.value = firstOrg.id
+          console.log(`Auto-selecting first organization: ${firstOrg.name}`)
+        }
+      }
+      
+      return fullOrgs
+    } finally {
+      isLoading.value = false
     }
-    
-    return fullOrgs
-  })
+  }
 
-  const isLoading = computed(() => status.value === 'pending')
-  const hasOrganizations = computed(() => organizations.value && organizations.value.length > 0)
-
-  const { refresh: refreshSelectedTeam } = useAsyncData('selectedTeam', async () => {
-    organization.value = await getFullOrganization()
+  async function fetchCurrentOrganization() {
+    if (!activeOrganizationId.value) return null
+    organization.value = await getFullOrganization(activeOrganizationId.value)
     return organization.value
-  })
+  }
 
   async function selectTeam(id: string, options: { showToast?: boolean } = {}) {
     const { showToast = true } = options
@@ -74,7 +87,7 @@ export function useOrgs() {
     })
     console.log('selectedTeam', data, error)
     activeOrganizationId.value = id
-    refreshSelectedTeam()
+    await fetchCurrentOrganization()
     if (showToast) {
       toast.add({
         title: 'Team selected',
@@ -115,7 +128,7 @@ export function useOrgs() {
       return false
     }
     
-    await refresh()
+    await fetchOrganizations()
     if (data) {
       await selectTeam(data.id, { showToast: false })
     }
@@ -146,17 +159,19 @@ export function useOrgs() {
         color: 'success'
       })
     }
-    refresh()
+    await fetchOrganizations()
   }
 
   return {
     organization,
+    organizations,
+    isLoading,
+    hasOrganizations,
+    fetchOrganizations,
+    fetchCurrentOrganization,
     getFullOrganization,
     selectTeam,
     createTeam,
-    deleteTeam,
-    organizations,
-    isLoading,
-    hasOrganizations
+    deleteTeam
   }
 }

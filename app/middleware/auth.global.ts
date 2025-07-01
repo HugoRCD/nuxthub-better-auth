@@ -68,9 +68,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (loggedIn.value && to.path !== '/onboarding') {
-    const { organizations, isLoading } = useOrgs()
+    const { organizations, isLoading, fetchOrganizations } = useOrgs()
     
-    await until(isLoading).toBe(false)
+    if (organizations.value.length === 0 && !isLoading.value) {
+      await fetchOrganizations()
+    }
     
     if (!organizations.value || organizations.value.length === 0) {
       console.log('User needs onboarding, redirecting...')
