@@ -19,13 +19,13 @@ export function serverAuth() {
       ),
       secondaryStorage: {
         get: async (key) => {
-          return await useStorage('cache').getItemRaw(`_auth:${key}`)
+          return await useStorage('auth').getItemRaw(`_auth:${key}`)
         },
         set: async (key, value, ttl) => {
-          return await useStorage('cache').setItem(`_auth:${key}`, value, { ttl })
+          return await useStorage('auth').setItem(`_auth:${key}`, value, { ttl })
         },
         delete: async (key) => {
-          await useStorage('cache').removeItem(`_auth:${key}`)
+          await useStorage('auth').removeItem(`_auth:${key}`)
         }
       },
       baseURL: getBaseURL(),

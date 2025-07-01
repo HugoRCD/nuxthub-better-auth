@@ -129,6 +129,12 @@ async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
 
 <template>
   <div class="flex-1 flex flex-col items-center justify-center gap-4 p-4">
+    <div class="flex items-center justify-center gap-2">
+      <UIcon name="i-simple-icons-nuxtdotjs" class="size-10" />
+      <NuxtLink to="/" class="flex items-center gap-3">
+        <span class="font-bold text-2xl">Nuxt x BetterAuth</span>
+      </NuxtLink>
+    </div>
     <UPageCard class="relative w-full max-w-md bg-muted/20">
       <span class="cross absolute -bottom-px -left-px size-px" />
       <span class="cross absolute -bottom-px -right-px size-px" />

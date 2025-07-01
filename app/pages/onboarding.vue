@@ -47,6 +47,7 @@ async function onCreateTeam(event: FormSubmitEvent<Schema>) {
       description: 'You can now start using the application.',
       color: 'success'
     })
+    await new Promise(resolve => setTimeout(resolve, 150))
     await navigateTo('/user')
   } catch (error: any) {
     toast.add({

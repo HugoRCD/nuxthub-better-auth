@@ -21,6 +21,27 @@ export default defineNuxtConfig({
     }
   },
 
+  $production: {
+    nitro: {
+      storage: {
+        auth: {
+          driver: 'redis',
+          url: process.env.REDIS_URL
+        }
+      }
+    }
+  },
+
+  $development: {
+    nitro: {
+      storage: {
+        auth: {
+          driver: 'memory'
+        }
+      }
+    }
+  },
+
   css: ['~/assets/css/index.css'],
 
   future: { compatibilityVersion: 4 },

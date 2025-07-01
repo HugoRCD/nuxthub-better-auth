@@ -8,6 +8,13 @@ const open = ref(false)
 const links = [
   [
     {
+      label: 'User',
+      icon: 'i-lucide-user',
+      to: '/user',
+      onSelect: () => {
+        open.value = false
+      }
+    }, {
       label: 'Notes',
       icon: 'i-lucide-notebook-pen',
       to: '/notes',

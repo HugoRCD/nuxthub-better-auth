@@ -33,7 +33,7 @@ async function deleteAccount() {
   }
 
   isDeletingAccount.value = true
-  
+
   try {
     await client.deleteUser()
     useCookie('activeOrganizationId').value = null
