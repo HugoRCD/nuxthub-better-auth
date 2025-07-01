@@ -1,25 +1,36 @@
 import { betterAuth } from 'better-auth'
-import { D1Dialect } from '@atinux/kysely-d1'
 import { anonymous, admin, organization } from 'better-auth/plugins'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { drizzle } from 'drizzle-orm/node-postgres'
+import * as schema from '../database/schema'
 
 let _auth: ReturnType<typeof betterAuth>
 
 export function serverAuth() {
   if (!_auth) {
     _auth = betterAuth({
-      database: {
-        dialect: new D1Dialect({
-          // @ts-expect-error - D1Dialect is not typed correctly
-          database: hubDatabase(),
+      database: drizzleAdapter(
+        drizzle({
+          connection: {
+            connectionString: process.env.DATABASE_URL
+          },
+          schema
         }),
-        type: 'sqlite',
-      },
+        {
+          provider: 'pg',
+          schema
+        }
+      ),
       secondaryStorage: {
-        get: key => hubKV().getItemRaw(`_auth:${key}`),
-        set: (key, value, ttl) => {
-          return hubKV().set(`_auth:${key}`, value, { ttl })
+        get: async key => {
+          console.log('get', key)
+          return await useStorage().getItem(`_auth:${key}`) as Promise<string | null>
         },
-        delete: key => hubKV().del(`_auth:${key}`),
+        set: async (key, value, ttl) => {
+          console.log('set', key, value, ttl)
+          return await useStorage().setItem(`_auth:${key}`, value, { ttl })
+        },
+        delete: async key => await useStorage().removeItem(`_auth:${key}`),
       },
       baseURL: getBaseURL(),
       emailAndPassword: {
@@ -68,3 +79,7 @@ function getBaseURL() {
   }
   return baseURL
 }
+
+_auth = serverAuth()
+
+export const auth = _auth!
