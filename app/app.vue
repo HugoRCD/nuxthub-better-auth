@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'NuxtHub x BetterAuth',
-  description: 'NuxtHub x BetterAuth - Demo of using BetterAuth with NuxtHub',
+  title: 'Nuxt x BetterAuth',
+  description: 'Nuxt x BetterAuth - Demo of using BetterAuth with Nuxt',
   ogImage: '/og.png',
   twitterImage: '/og.png',
 })
