@@ -23,7 +23,7 @@
     "@nuxt/ui-pro": "^3.2.0",
     "@nuxthub/core": "^0.9.0",
     "@shelve/cli": "^4.1.6",
-    "@vueuse/core": "^11.3.0",
+    "@vueuse/core": "^13.4.0",
     "better-auth": "^1.2.12",
     "drizzle-orm": "^0.44.2",
     "nuxt": "^3.17.6",
