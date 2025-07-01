@@ -1,5 +1,5 @@
 export default eventHandler(async (event) => {
-  const { title, content, userId } = await readBody(event)
+  const { title, content, userId, organizationId } = await readBody(event)
 
   console.log(`Creating note for user ${userId}`)
 
@@ -7,8 +7,10 @@ export default eventHandler(async (event) => {
     title,
     content,
     createdAt: new Date(),
-    updatedAt: new Date()
-  }).returning().get()
+    updatedAt: new Date(),
+    userId,
+    organizationId
+  }).returning()
 
   return note
 })

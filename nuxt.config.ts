@@ -13,6 +13,12 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    experimental: {
+      asyncContext: true
+    }
+  },
+
   css: ['~/assets/css/index.css'],
 
   future: { compatibilityVersion: 4 },
