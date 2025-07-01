@@ -8,7 +8,7 @@ A demo of using [BetterAuth](https://better-auth.com) with Nuxt and PostgreSQL. 
 
 https://better-auth.hrcd.fr
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FHugoRCD%2Fnuxthub-better-auth&env=DATABASE_URL,BETTER_AUTH_SECRET&envDescription=Required%20environment%20variables&envLink=https%3A%2F%2Fgithub.com%2FHugoRCD%2Fnuxthub-better-auth%23environment-variables)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FHugoRCD%2Fnuxt-better-auth&env=DATABASE_URL,BETTER_AUTH_SECRET&envDescription=Required%20environment%20variables&envLink=https%3A%2F%2Fgithub.com%2FHugoRCD%2Fnuxt-better-auth%23environment-variables)
 
 # TODO
 
