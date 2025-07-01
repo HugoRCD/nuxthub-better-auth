@@ -33,10 +33,10 @@
   },
   "devDependencies": {
     "@hrcd/eslint-config": "^3.0.3",
-    "drizzle-kit": "^0.31.4",
-    "eslint": "^9.30.0",
     "typescript": "^5.8.3",
-    "vue-tsc": "^2.2.10",
+    "eslint": "^9.30.0",
+    "drizzle-kit": "^0.31.4",
+    "vue-tsc": "^3.0.0",
     "wrangler": "^4.22.0"
   },
   "packageManager": "pnpm@10.12.4"
