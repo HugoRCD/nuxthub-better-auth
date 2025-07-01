@@ -26,7 +26,7 @@ export function useAuth() {
   })
 
   const options = defu(useRuntimeConfig().public.auth as Partial<RuntimeAuthConfig>, {
-    redirectUserTo: '/',
+    redirectUserTo: '/user',
     redirectGuestTo: '/',
   })
   const session = useState<InferSessionFromClient<ClientOptions> | null>('auth:session', () => null)
@@ -39,15 +39,22 @@ export function useAuth() {
       return
     }
     sessionFetching.value = true
-    const { data } = await client.getSession({
-      fetchOptions: {
-        headers,
-      },
-    })
-    session.value = data?.session || null
-    user.value = data?.user || null
-    sessionFetching.value = false
-    return data
+    try {
+      const { data } = await client.getSession({
+        fetchOptions: {
+          headers,
+        },
+      })
+      session.value = data?.session || null
+      user.value = data?.user || null
+      return data
+    } catch (error) {
+      console.error('Error fetching session:', error)
+      session.value = null
+      user.value = null
+    } finally {
+      sessionFetching.value = false
+    }
   }
 
   if (import.meta.client) {
