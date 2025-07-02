@@ -46,7 +46,6 @@ export function useOrgs() {
       const { data, error } = await client.organization.list()
 
       if (error) {
-        console.log('error', error)
         toast.add({
           title: 'Failed to fetch organizations',
           color: 'error'
@@ -85,7 +84,6 @@ export function useOrgs() {
     const { data, error } = await client.organization.setActive({
       organizationId: id
     })
-    console.log('selectedTeam', data, error)
     activeOrganizationId.value = id
     await fetchCurrentOrganization()
     if (showToast) {
@@ -119,7 +117,6 @@ export function useOrgs() {
       slug: event.data.slug,
       logo: event.data.logo
     })
-    console.log('createdTeam', data, error)
     if (error) {
       toast.add({
         title: 'Failed to create team',

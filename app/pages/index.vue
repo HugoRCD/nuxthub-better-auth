@@ -3,15 +3,15 @@ import * as z from 'zod'
 import type { FormSubmitEvent, TabsItem } from '@nuxt/ui'
 
 definePageMeta({
-  auth: {
-    only: 'guest',
-    redirectUserTo: '/app/user',
-  },
+  middleware: ['guest'],
   layout: 'auth'
 })
 
+const { fetchOrganizations } = useOrgs()
+
 const auth = useAuth()
 const toast = useToast()
+const loading = ref(false)
 
 const items = ref<TabsItem[]>([
   {
@@ -75,6 +75,7 @@ type SignUpSchema = z.output<typeof signUpSchema>
 
 async function onSignIn(payload: FormSubmitEvent<SignInSchema>) {
   try {
+    loading.value = true
     const { data, error } = await auth.signIn.email({
       email: payload.data.email,
       password: payload.data.password,
@@ -84,6 +85,8 @@ async function onSignIn(payload: FormSubmitEvent<SignInSchema>) {
         title: 'Successfully signed in',
         color: 'success',
       })
+      
+      await fetchOrganizations()
       await navigateTo('/app/user')
     } else {
       toast.add({
@@ -96,11 +99,14 @@ async function onSignIn(payload: FormSubmitEvent<SignInSchema>) {
       title: error.message,
       color: 'error',
     })
+  } finally {
+    loading.value = false
   }
 }
 
 async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
   try {
+    loading.value = true
     const { data, error } = await auth.signUp.email({
       email: payload.data.email,
       password: payload.data.password,
@@ -123,6 +129,8 @@ async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
       title: error.message,
       color: 'error',
     })
+  } finally {
+    loading.value = false
   }
 }
 </script>
@@ -148,6 +156,7 @@ async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
             description="Enter your credentials to access your account."
             :fields="signInFields"
             :providers
+            :loading
             :ui="{
               title: 'text-left',
               description: 'text-left'

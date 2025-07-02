@@ -4,12 +4,11 @@ import type { User } from 'better-auth'
 
 const auth = useAuth()
 const toast = useToast()
+// eslint-disable-next-line
 const UAvatar = resolveComponent('UAvatar')
 
 definePageMeta({
-  auth: {
-    only: 'admin',
-  },
+  middleware: ['admin'],
 })
 
 const { isImpersonating, startImpersonation } = useImpersonation()
