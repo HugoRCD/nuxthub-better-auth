@@ -23,7 +23,7 @@ const items = computed<DropdownMenuItem[][]>(() => ([
     {
       label: 'Manage my account',
       icon: 'i-lucide-user',
-      to: '/user'
+      to: '/app/user'
     }
   ], [
     {

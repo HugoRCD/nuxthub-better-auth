@@ -49,7 +49,7 @@ const items = computed<DropdownMenuItem[][]>(() => {
       }, {
         label: 'Manage teams',
         icon: 'i-lucide-cog',
-        to: '/teams'
+        to: '/app/teams'
       }
     ]
   ]

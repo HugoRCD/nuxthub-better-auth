@@ -4,12 +4,10 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  ssr: false,
-
   runtimeConfig: {
     public: {
       auth: {
-        redirectUserTo: '/user',
+        redirectUserTo: '/app/user',
         redirectGuestTo: '/',
       },
     },
@@ -18,6 +16,11 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       asyncContext: true
+    },
+    routeRules: {
+      '/app/**': {
+        ssr: false
+      }
     }
   },
 

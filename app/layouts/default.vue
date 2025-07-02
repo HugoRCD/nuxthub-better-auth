@@ -10,21 +10,21 @@ const links = [
     {
       label: 'User',
       icon: 'i-lucide-user',
-      to: '/user',
+      to: '/app/user',
       onSelect: () => {
         open.value = false
       }
     }, {
       label: 'Notes',
       icon: 'i-lucide-notebook-pen',
-      to: '/notes',
+      to: '/app/notes',
       onSelect: () => {
         open.value = false
       }
     }, {
       label: 'Admin',
       icon: 'i-lucide-shield-check',
-      to: '/admin',
+      to: '/app/admin',
       onSelect: () => {
         open.value = false
       }

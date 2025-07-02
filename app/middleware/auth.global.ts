@@ -64,7 +64,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       title: 'You are not authorized to access this page',
       color: 'error'
     })
-    return navigateTo('/')
+    return navigateTo('/app/user')
   }
 
   if (loggedIn.value && to.path !== '/onboarding') {

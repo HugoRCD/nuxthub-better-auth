@@ -5,7 +5,7 @@ import type { FormSubmitEvent, TabsItem } from '@nuxt/ui'
 definePageMeta({
   auth: {
     only: 'guest',
-    redirectUserTo: '/user',
+    redirectUserTo: '/app/user',
   },
   layout: 'auth'
 })
@@ -55,7 +55,7 @@ const providers = [
     label: 'GitHub',
     icon: 'i-simple-icons-github',
     onClick: () => {
-      auth.signIn.social({ provider: 'github', callbackURL: '/user' })
+      auth.signIn.social({ provider: 'github', callbackURL: '/app/user' })
     }
   }
 ]
@@ -84,7 +84,7 @@ async function onSignIn(payload: FormSubmitEvent<SignInSchema>) {
         title: 'Successfully signed in',
         color: 'success',
       })
-      await navigateTo('/user')
+      await navigateTo('/app/user')
     } else {
       toast.add({
         title: error.message,
@@ -111,7 +111,7 @@ async function onSignUp(payload: FormSubmitEvent<SignUpSchema>) {
         title: 'Successfully signed up',
         color: 'success',
       })
-      await navigateTo('/user')
+      await navigateTo('/app/user')
     } else {
       toast.add({
         title: error.message,

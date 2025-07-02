@@ -48,7 +48,7 @@ async function onCreateTeam(event: FormSubmitEvent<Schema>) {
       color: 'success'
     })
     await new Promise(resolve => setTimeout(resolve, 150))
-    await navigateTo('/user')
+    await navigateTo('/app/user')
   } catch (error: any) {
     toast.add({
       title: 'Failed to create team',
